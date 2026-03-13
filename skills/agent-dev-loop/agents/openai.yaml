@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Dev Loop"
+  short_description: "Longer autonomous coding loops"
+  default_prompt: "Use this skill when the user wants Codex to operate in a longer-running agent mode with persistent project memory, task state, evidence capture, review passes, long-run command handling, and minimal back-and-forth."
