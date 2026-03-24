@@ -66,9 +66,10 @@ def main() -> int:
     print("Next:")
     print(f"  1. Fill in {task_dir / 'TASK.md'}")
     print(f"  2. Update {task_dir / 'STATE.md'} and {task_dir / 'EVIDENCE.md'} after each work batch")
-    print(f"  3. Use {script_dir / 'render_resume_prompt.py'} {task_dir} for the next session")
+    print(f"  3. If present, link the task to {agent_root / 'ROADMAP.md'} and set auto-continue rules")
+    print(f"  4. Use {script_dir / 'render_resume_prompt.py'} {task_dir} for the next session")
     if not (agent_root / "PROJECT.md").exists():
-        print(f"  4. Consider bootstrapping project memory with {script_dir / 'init_agent_project.py'}")
+        print(f"  5. Consider bootstrapping project memory with {script_dir / 'init_agent_project.py'}")
     return 0
 
 

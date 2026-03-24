@@ -24,6 +24,8 @@ def main() -> int:
         print(f"- Read first: {project_dir / 'PROJECT.md'}")
     if (project_dir / "TASTE.md").exists():
         print(f"- Read first: {project_dir / 'TASTE.md'}")
+    if (project_dir / "ROADMAP.md").exists():
+        print(f"- Read first: {project_dir / 'ROADMAP.md'}")
     print(f"- Task directory: {task_dir}")
     print(f"- Read: {task_dir / 'TASK.md'}")
     print(f"- Read: {task_dir / 'STATE.md'}")
@@ -33,6 +35,7 @@ def main() -> int:
     print(f"- Read if needed: {task_dir / 'BACKLOG.md'}")
     print(f"- Read if needed: {task_dir / 'RESULTS.md'}")
     print("- Continue autonomously until the task is complete or a hard blocker appears.")
+    print("- If ROADMAP.md approves the next task and budget remains, auto-create it and continue without asking.")
     print("- Update STATE.md, DECISIONS.md, EVIDENCE.md, and RESULTS.md before stopping.")
     print("- Run an execution pass and then a review pass before declaring completion.")
     print("- Only interrupt for approvals, missing secrets, destructive actions, or user-owned decisions.")

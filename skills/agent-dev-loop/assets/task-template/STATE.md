@@ -5,6 +5,7 @@
 - Active Phase: `context`
 - Last Updated: `__DATE__`
 - Branch: `unknown`
+- Milestone Mode: `disabled`
 
 ## Completed This Session
 
@@ -18,6 +19,12 @@
 
 1. Read the relevant code and constraints.
 2. Replace this starter state with the current task reality.
+
+## Auto-Continue
+
+- Current autonomy budget:
+- Next approved task:
+- Continue without asking if current task completes: `no`
 
 ## Blockers
 

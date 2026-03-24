@@ -58,6 +58,9 @@ def main() -> int:
     else:
         print("")
         print("No new project-memory files were needed.")
+    roadmap_path = agent_root / "ROADMAP.md"
+    if roadmap_path.exists():
+        print(f"Roadmap: {roadmap_path}")
     return 0
 
 

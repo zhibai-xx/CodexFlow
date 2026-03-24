@@ -1,0 +1,33 @@
+# OS and editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+# Local environments
+.env
+.env.*
+.venv/
+venv/
+
+# Agent runtime state
+.codex-agent/tasks/
+.codex-agent/inception/
+.codex-agent/evals/
+.codex-agent/**/*.log
+
+# Local project sandboxes
+/workspaces/*
+!/workspaces/.gitkeep
+
+# Generic local scratch space
+/tmp/
+/scratch/

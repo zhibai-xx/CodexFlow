@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Eval"
+  short_description: "Evaluate agent delivery quality"
+  default_prompt: "Use this skill when a Codex-driven task, milestone, or project phase should be evaluated for autonomy quality, state quality, verification quality, interruption quality, and output quality."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Idea to Spec"
+  short_description: "Turn raw ideas into buildable specs"
+  default_prompt: "Use this skill when the user has a product or project idea that needs clarification, ambiguity detection, scope shaping, a concrete spec, and a first implementation plan."

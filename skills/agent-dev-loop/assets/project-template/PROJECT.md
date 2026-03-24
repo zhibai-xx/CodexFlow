@@ -40,3 +40,8 @@ Describe what this repo or subproject exists to do.
 - Security:
 - Compatibility:
 - Release or rollback concerns:
+
+## Execution Mode
+
+- Milestone file: `.codex-agent/ROADMAP.md`
+- Default stop boundary: milestone completion, hard blocker, or autonomy-budget exhaustion

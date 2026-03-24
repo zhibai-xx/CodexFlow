@@ -13,6 +13,7 @@ Interrupt the user only when continuing would be materially unsafe or likely wro
 ## Do Not Interrupt
 
 - A single implementation step is done.
+- A single task is done and `ROADMAP.md` already approves the next task.
 - You can continue by inspecting more code.
 - You can choose a conservative local default and record it.
 - A non-critical test is flaky but the main validation path is available.
