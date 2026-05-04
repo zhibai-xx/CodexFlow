@@ -17,7 +17,7 @@ If the repo does not already have project memory, run:
 python3 scripts/init_agent_project.py "<project-name>" --root <repo-root>
 ```
 
-Fill in `.codex-agent/PROJECT.md` with architecture, commands, risks, and delivery constraints. Fill in `.codex-agent/TASTE.md` with the product, UX, and code-quality standards that should shape future decisions.
+Fill in `.codex-agent/PROJECT.md` with architecture, commands, risks, and delivery constraints. Fill in `.codex-agent/TASTE.md` as the taste-stack index, then keep project-wide standards in `.codex-agent/taste/project.md`.
 Fill in `.codex-agent/ROADMAP.md` with the approved milestone sequence, autonomy budget, allowed decisions, and milestone stop conditions.
 
 Read `references/project-bootstrap.md` for the startup sequence and `references/taste-rubric.md` before defining quality standards.
@@ -58,10 +58,12 @@ If the current task completes and `ROADMAP.md` already approves the next task in
 Read these references as needed:
 
 - `references/workflow.md` for batching, state discipline, and skill/tool discovery
+- `references/event-layer.md` for append-only factual history
 - `references/milestone-mode.md` for milestone-driven execution and auto-continue behavior
 - `references/skill-discovery.md` for how to search, rank, and record skill choices
 - `references/long-runs.md` for commands that may run for 30 minutes or longer
 - `references/review-mode.md` for execution vs review stages
+- `references/taste-layers.md` for layered quality standards
 - `references/interrupt-rules.md` for the conditions that justify interrupting the user
 
 ## Keep the Task Resumable
@@ -71,8 +73,10 @@ Treat the project and task directories as the handoff contract for the next Code
 Project-level memory:
 
 - `.codex-agent/PROJECT.md`: architecture, commands, repo map, and risk areas
-- `.codex-agent/TASTE.md`: product, UX, code, and communication standards
+- `.codex-agent/TASTE.md`: the taste-stack index and activation rules
+- `.codex-agent/taste/project.md`: the default project-wide taste layer
 - `.codex-agent/ROADMAP.md`: approved task sequence, autonomy budget, and milestone stop rules
+- `.codex-agent/events/project-events.jsonl`: append-only project-level event history
 
 Task-level state:
 
@@ -80,6 +84,7 @@ Task-level state:
 - `STATE.md`: current phase, completed work, next actions, blockers, and verification status
 - `DECISIONS.md`: decisions made, rationale, tradeoffs, and reversals
 - `EVIDENCE.md`: test evidence, command results, and inspection findings
+- `EVENTS.jsonl`: append-only factual timeline for material task events
 - `RUNS.md`: append-only log of long-running commands
 - `BACKLOG.md`: discovered follow-up work that is out of scope for the current task
 - `RESULTS.md`: user-facing outcome and remaining risks
@@ -91,6 +96,7 @@ Before ending a turn, leave `STATE.md` with a concrete next action. If the task 
 - `scripts/init_agent_project.py`: create project-level memory under `.codex-agent/`
 - `scripts/init_agent_task.py`: create a new task directory from templates
 - `scripts/discover_skills.py`: discover and rank available repo-local and Codex-home skills
+- `scripts/append_event.py`: append a structured event to a project or task event log
 - `scripts/start_long_run.py`: launch a long-running command with logs and metadata
 - `scripts/inspect_long_run.py`: inspect a long-running command and tail its logs
 - `scripts/render_resume_prompt.py`: print a compact resume prompt for a future Codex session

@@ -30,6 +30,13 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def render_template(path: Path, replacements: dict[str, str]) -> str:
+    content = path.read_text(encoding="utf-8")
+    for placeholder, value in replacements.items():
+        content = content.replace(placeholder, value)
+    return content
+
+
 def main() -> int:
     args = parse_args()
     script_dir = Path(__file__).resolve().parent
@@ -54,22 +61,21 @@ def main() -> int:
         "__OBJECTIVE__": args.objective.strip(),
     }
 
-    for template_path in sorted(template_dir.glob("*.md")):
-        content = template_path.read_text(encoding="utf-8")
-        for placeholder, value in replacements.items():
-            content = content.replace(placeholder, value)
-        output_path = task_dir / template_path.name
-        output_path.write_text(content, encoding="utf-8")
+    for template_path in sorted(path for path in template_dir.rglob("*") if path.is_file()):
+        output_path = task_dir / template_path.relative_to(template_dir)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(render_template(template_path, replacements), encoding="utf-8")
 
     print(task_dir)
     print("")
     print("Next:")
     print(f"  1. Fill in {task_dir / 'TASK.md'}")
     print(f"  2. Update {task_dir / 'STATE.md'} and {task_dir / 'EVIDENCE.md'} after each work batch")
-    print(f"  3. If present, link the task to {agent_root / 'ROADMAP.md'} and set auto-continue rules")
-    print(f"  4. Use {script_dir / 'render_resume_prompt.py'} {task_dir} for the next session")
+    print(f"  3. Append material task events to {task_dir / 'EVENTS.jsonl'}")
+    print(f"  4. If present, link the task to {agent_root / 'ROADMAP.md'} and set auto-continue rules")
+    print(f"  5. Use {script_dir / 'render_resume_prompt.py'} {task_dir} for the next session")
     if not (agent_root / "PROJECT.md").exists():
-        print(f"  5. Consider bootstrapping project memory with {script_dir / 'init_agent_project.py'}")
+        print(f"  6. Consider bootstrapping project memory with {script_dir / 'init_agent_project.py'}")
     return 0
 
 

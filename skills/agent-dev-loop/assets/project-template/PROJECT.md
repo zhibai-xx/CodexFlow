@@ -44,4 +44,7 @@ Describe what this repo or subproject exists to do.
 ## Execution Mode
 
 - Milestone file: `.codex-agent/ROADMAP.md`
+- Taste index: `.codex-agent/TASTE.md`
+- Default taste layer: `.codex-agent/taste/project.md`
+- Project event log: `.codex-agent/events/project-events.jsonl`
 - Default stop boundary: milestone completion, hard blocker, or autonomy-budget exhaustion

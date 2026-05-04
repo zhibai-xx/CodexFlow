@@ -34,6 +34,10 @@
 
 - Not run yet.
 
+## Event Log
+
+- `EVENTS.jsonl` exists for material factual history.
+
 ## Files Touched
 
 - None.

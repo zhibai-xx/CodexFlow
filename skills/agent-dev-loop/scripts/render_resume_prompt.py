@@ -24,11 +24,16 @@ def main() -> int:
         print(f"- Read first: {project_dir / 'PROJECT.md'}")
     if (project_dir / "TASTE.md").exists():
         print(f"- Read first: {project_dir / 'TASTE.md'}")
+        print("- Then read only the active taste layer files listed there.")
     if (project_dir / "ROADMAP.md").exists():
         print(f"- Read first: {project_dir / 'ROADMAP.md'}")
+    if (project_dir / "events" / "project-events.jsonl").exists():
+        print(f"- Read if recent state is unclear: {project_dir / 'events' / 'project-events.jsonl'}")
     print(f"- Task directory: {task_dir}")
     print(f"- Read: {task_dir / 'TASK.md'}")
     print(f"- Read: {task_dir / 'STATE.md'}")
+    if (task_dir / "EVENTS.jsonl").exists():
+        print(f"- Read if needed: {task_dir / 'EVENTS.jsonl'}")
     print(f"- Read if needed: {task_dir / 'DECISIONS.md'}")
     print(f"- Read if needed: {task_dir / 'EVIDENCE.md'}")
     print(f"- Read if needed: {task_dir / 'RUNS.md'}")

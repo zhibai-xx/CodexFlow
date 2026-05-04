@@ -22,6 +22,7 @@ venv/
 .codex-agent/tasks/
 .codex-agent/inception/
 .codex-agent/evals/
+.codex-agent/events/
 .codex-agent/**/*.log
 
 # Local project sandboxes

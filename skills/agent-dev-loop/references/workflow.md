@@ -10,10 +10,11 @@ Before substantial work:
 
 1. Read `.codex-agent/PROJECT.md` if it exists.
 2. Read `.codex-agent/TASTE.md` if it exists.
-3. Read `.codex-agent/ROADMAP.md` if it exists.
-4. Inspect local `AGENTS.md`, available skills, and reusable scripts.
-5. Run `discover_skills.py` when the task is non-trivial or could benefit from specialized workflows.
-6. Read the current task directory.
+3. If `TASTE.md` exists, read only the taste layer files it marks active.
+4. Read `.codex-agent/ROADMAP.md` if it exists.
+5. Inspect local `AGENTS.md`, available skills, and reusable scripts.
+6. Run `discover_skills.py` when the task is non-trivial or could benefit from specialized workflows.
+7. Read the current task directory.
 
 Prefer existing skills, scripts, and templates over inventing a new process from scratch.
 If `ROADMAP.md` exists, treat it as the default authority for milestone sequence and auto-continue permissions.
@@ -63,6 +64,8 @@ Update the `Skill Plan` section in `TASK.md` when you select or reject candidate
 
 Update `EVIDENCE.md` when a command, test, or inspection produces evidence.
 
+Update `EVENTS.jsonl` when a batch produces a material fact that should survive snapshot rewrites.
+
 Update `RUNS.md` when detached commands are launched or completed.
 
 Update `BACKLOG.md` when you discover relevant work that should not be executed in the current task.
@@ -70,6 +73,8 @@ Update `BACKLOG.md` when you discover relevant work that should not be executed 
 Update `RESULTS.md` when the user-facing outcome changes materially.
 
 If `ROADMAP.md` exists and the current task completes, check whether the next approved task can be started immediately. If yes, create it and continue within the autonomy budget.
+
+Read project-level or task-level event logs only when recent factual history is unclear or a cross-session timeline matters.
 
 ## Review Standard
 

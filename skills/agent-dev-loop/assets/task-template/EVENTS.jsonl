@@ -1,0 +1,1 @@
+{"ts":"__DATE__","scope":"task","task_id":"__TASK_ID__","type":"task-created","repo_root":"__REPO_ROOT__","source":"init_agent_task.py","summary":"Created task memory and starter state.","artifacts":["TASK.md","STATE.md","DECISIONS.md","EVIDENCE.md","RUNS.md","BACKLOG.md","RESULTS.md","EVENTS.jsonl"]}

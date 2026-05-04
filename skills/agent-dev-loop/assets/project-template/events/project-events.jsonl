@@ -1,0 +1,1 @@
+{"ts":"__DATE__","scope":"project","type":"project-memory-created","project":"__PROJECT_NAME__","root":"__REPO_ROOT__","source":"init_agent_project.py","summary":"Initialized project memory, roadmap, and the taste stack.","artifacts":[".codex-agent/PROJECT.md",".codex-agent/TASTE.md",".codex-agent/ROADMAP.md",".codex-agent/taste/project.md"]}

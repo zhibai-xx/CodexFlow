@@ -9,10 +9,11 @@ Do not scan this repository indiscriminately. Read this file first, then only th
 1. Read the local project `AGENTS.md`
 2. Read the local `.codex-agent/PROJECT.md`
 3. Read the local `.codex-agent/TASTE.md`
-4. Read the local `.codex-agent/ROADMAP.md`
-5. If the project has an active inception packet, use `idea-to-spec`
-6. If the project has an active task, use `agent-dev-loop`
-7. If the user asks to evaluate a task or milestone, use `agent-eval`
+4. Read only the local taste layer files that `TASTE.md` marks active
+5. Read the local `.codex-agent/ROADMAP.md`
+6. If the project has an active inception packet, use `idea-to-spec`
+7. If the project has an active task, use `agent-dev-loop`
+8. If the user asks to evaluate a task or milestone, use `agent-eval`
 
 ## Startup Algorithm
 
@@ -33,6 +34,7 @@ Do not scan this repository indiscriminately. Read this file first, then only th
 - Use `agent-dev-loop`
 - Resume from `.codex-agent/tasks/...`
 - Obey `ROADMAP.md` for milestone sequence and autonomy budget
+- Use `.codex-agent/events/project-events.jsonl` or task `EVENTS.jsonl` only when recent history is unclear
 - Continue into the next approved task when allowed; do not stop after every clean slice
 
 ### If the user asks whether the agent process is good enough
@@ -53,5 +55,7 @@ Read only the specific skill needed for the current phase.
 
 - Prefer a thin local project entrypoint plus this central bootstrap over “read all external files”.
 - Keep state on disk, not in the chat history.
+- Keep snapshots as the human entrypoint and use append-only events only for factual history.
+- Keep taste layered; do not load inactive taste files by default.
 - Treat `ROADMAP.md` as the authority for milestone-level auto-continue behavior.
 - Stop only for hard blockers, budget exhaustion, or milestone boundaries.

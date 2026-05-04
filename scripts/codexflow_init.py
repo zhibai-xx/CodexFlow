@@ -37,6 +37,7 @@ def ensure_gitignore(project_root: Path) -> None:
         ".codex-agent/tasks/\n"
         ".codex-agent/inception/\n"
         ".codex-agent/evals/\n"
+        ".codex-agent/events/\n"
         ".codex-agent/**/*.log\n"
     )
     gitignore_path = project_root / ".gitignore"
@@ -54,8 +55,8 @@ def seed_project_memory(agent_root: Path, project_name: str, project_root: Path,
         "__DATE__": str(date.today()),
     }
     created: list[Path] = []
-    for template_path in sorted(template_dir.glob("*.md")):
-        output_path = agent_root / template_path.name
+    for template_path in sorted(path for path in template_dir.rglob("*") if path.is_file()):
+        output_path = agent_root / template_path.relative_to(template_dir)
         if write_if_missing(output_path, render_template(template_path, replacements)):
             created.append(output_path)
     return created
@@ -262,7 +263,9 @@ def main() -> int:
     print("- use the external CodexFlow brain")
     print("- read `.codex-agent/PROJECT.md`")
     print("- read `.codex-agent/TASTE.md`")
+    print("- then read only the active taste layer files listed in `.codex-agent/TASTE.md`")
     print("- read `.codex-agent/ROADMAP.md`")
+    print("- consult `.codex-agent/events/project-events.jsonl` only if recent state is unclear")
     return 0
 
 

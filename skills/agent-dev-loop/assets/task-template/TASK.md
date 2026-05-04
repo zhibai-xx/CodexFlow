@@ -31,6 +31,11 @@ __OBJECTIVE__
 - Next approved task:
 - Auto-continue allowed: `yes/no`
 
+## State Sources
+
+- Human snapshot files: `TASK.md`, `STATE.md`, `DECISIONS.md`, `EVIDENCE.md`, `RESULTS.md`
+- Append-only event file: `EVENTS.jsonl`
+
 ## Repo Context
 
 - Relevant paths:

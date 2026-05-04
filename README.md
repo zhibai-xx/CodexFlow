@@ -42,8 +42,10 @@ CodexFlow 的设计原则：
 
 - 不依赖聊天历史作为主要记忆
 - 尽量把状态写入磁盘
+- 用 Markdown 快照做主入口，用 append-only 事件流补充事实时间线
 - 用薄本地入口连接中央脑，而不是让新项目“读取整个仓库”
 - 用 skill 区分不同阶段：立项、执行、评测
+- 用分层 TASTE 控制上下文，只加载当前激活的质量标准
 - 用 roadmap 和 autonomy budget 降低不必要的暂停
 
 ### English
@@ -52,9 +54,19 @@ CodexFlow is designed around these principles:
 
 - do not rely on chat history as the main memory
 - persist state on disk whenever possible
+- use Markdown snapshots as the main entrypoint and append-only events for factual history
 - attach projects through a thin local entrypoint instead of asking Codex to read the whole brain repo
 - use dedicated skills for inception, delivery, and evaluation
+- keep taste layered so only active quality rules are loaded
 - use roadmap and autonomy budgets to reduce unnecessary pauses
+
+更完整的架构立场见 [ARCHITECTURE_PRINCIPLES.md](/home/zhibai/projects/aiAgnet/ARCHITECTURE_PRINCIPLES.md)。
+
+For the fuller architectural stance, see [ARCHITECTURE_PRINCIPLES.md](/home/zhibai/projects/aiAgnet/ARCHITECTURE_PRINCIPLES.md).
+
+默认执行方式见 [DEFAULT_OPERATING_MODE.md](/home/zhibai/projects/aiAgnet/DEFAULT_OPERATING_MODE.md)。
+
+For the default execution behavior, see [DEFAULT_OPERATING_MODE.md](/home/zhibai/projects/aiAgnet/DEFAULT_OPERATING_MODE.md).
 
 ## 3. 快速开始 / Quick Start
 
@@ -78,7 +90,9 @@ codexflow-init
 - `START_Codex.md`
 - `.codex-agent/PROJECT.md`
 - `.codex-agent/TASTE.md`
+- `.codex-agent/taste/project.md`
 - `.codex-agent/ROADMAP.md`
+- `.codex-agent/events/project-events.jsonl`
 - 如果提供了想法，还会生成 inception 包
 
 然后在该项目目录中启动 Codex，并把 `START_Codex.md` 的内容作为第一条消息发给新对话。
@@ -103,7 +117,9 @@ After initialization, it creates:
 - `START_Codex.md`
 - `.codex-agent/PROJECT.md`
 - `.codex-agent/TASTE.md`
+- `.codex-agent/taste/project.md`
 - `.codex-agent/ROADMAP.md`
+- `.codex-agent/events/project-events.jsonl`
 - and an inception packet if an idea was provided
 
 Then start Codex inside that project and use the contents of `START_Codex.md` as the first message.
@@ -131,7 +147,18 @@ Then start Codex inside that project and use the contents of `START_Codex.md` as
 3. 填写或调整 `ROADMAP.md`
 4. 让 Codex 按 roadmap 连续推进
 
-#### 4.3 阶段复盘
+#### 4.3 轻量事件层与分层 TASTE
+
+默认状态模型是：
+
+- `PROJECT.md`、`TASTE.md`、`ROADMAP.md`、`TASK.md`、`STATE.md` 负责给人和新会话快速恢复上下文
+- `.codex-agent/events/project-events.jsonl` 和 task `EVENTS.jsonl` 负责记录追加式事实
+- `TASTE.md` 只是索引，真正的项目标准放在 `taste/project.md`
+- 只有 `TASTE.md` 标记为 active 的 taste layer 才应该被读取
+
+这意味着 CodexFlow 不走重数据库路线，也不要求每次启动都扫描全部历史。
+
+#### 4.4 阶段复盘
 
 如果你想知道 agent 工作得好不好：
 
@@ -160,7 +187,18 @@ If you already know what you want to build:
 3. fill or adjust `ROADMAP.md`
 4. let Codex continue through the roadmap
 
-#### 4.3 Evaluating the agent
+#### 4.3 Lightweight event layer and layered taste
+
+The default state model is:
+
+- `PROJECT.md`, `TASTE.md`, `ROADMAP.md`, `TASK.md`, and `STATE.md` are the main human and resume entrypoints
+- `.codex-agent/events/project-events.jsonl` and task `EVENTS.jsonl` hold append-only factual history
+- `TASTE.md` is an index, while actual project standards live in `taste/project.md`
+- only taste layers marked active in `TASTE.md` should be loaded
+
+This keeps CodexFlow away from a heavy database-first architecture and avoids loading every historical artifact on startup.
+
+#### 4.4 Evaluating the agent
 
 If you want to know whether the agent workflow is actually good enough:
 
@@ -224,6 +262,7 @@ aiAgnet/
   - 本地薄入口和首条提示词模板
 - `skills/`
   - 核心 agent 能力
+  - `agent-dev-loop` 现在还包含事件层与 taste 分层模板
 - `workspaces/`
   - 本地项目沙箱；默认不推送到远程
 
@@ -241,6 +280,7 @@ aiAgnet/
   - thin local entrypoint and first-message templates
 - `skills/`
   - core agent capabilities
+  - `agent-dev-loop` now also carries event-layer and layered-taste templates
 - `workspaces/`
   - local project sandboxes; ignored from remote by default
 
@@ -254,7 +294,9 @@ CodexFlow 会在目标项目中生成：
 - `START_Codex.md`
 - `.codex-agent/PROJECT.md`
 - `.codex-agent/TASTE.md`
+- `.codex-agent/taste/project.md`
 - `.codex-agent/ROADMAP.md`
+- `.codex-agent/events/project-events.jsonl`
 - `.codex-agent/inception/...`（如果是 inception 模式）
 - `.codex-agent/tasks/...`（后续 delivery 阶段）
 - `.codex-agent/evals/...`（后续评测阶段）
@@ -267,7 +309,9 @@ CodexFlow generates these files in the target project:
 - `START_Codex.md`
 - `.codex-agent/PROJECT.md`
 - `.codex-agent/TASTE.md`
+- `.codex-agent/taste/project.md`
 - `.codex-agent/ROADMAP.md`
+- `.codex-agent/events/project-events.jsonl`
 - `.codex-agent/inception/...` if inception mode is used
 - `.codex-agent/tasks/...` during delivery
 - `.codex-agent/evals/...` during evaluation
@@ -335,7 +379,9 @@ codexflow-init
 - `START_Codex.md`
 - `.codex-agent/PROJECT.md`
 - `.codex-agent/TASTE.md`
+- `.codex-agent/taste/project.md`
 - `.codex-agent/ROADMAP.md`
+- `.codex-agent/events/project-events.jsonl`
 - `.codex-agent/inception/...`
 
 然后启动 Codex，把 `START_Codex.md` 中的内容作为第一条消息发给新对话。
@@ -361,10 +407,12 @@ Codex 应该先读：
 - `AGENTS.md`
 - `.codex-agent/PROJECT.md`
 - `.codex-agent/TASTE.md`
+- `.codex-agent/taste/project.md`（如果 `TASTE.md` 标记为 active）
 - `.codex-agent/ROADMAP.md`
 
 如果存在活跃的 inception packet，就先继续澄清和规格收敛。  
-如果已经存在活跃 task，就直接按 `ROADMAP.md` 和 task state 继续推进。
+如果已经存在活跃 task，就直接按 `ROADMAP.md` 和 task state 继续推进。  
+只有在近期历史不清楚时，才去读 `.codex-agent/events/project-events.jsonl` 或 task `EVENTS.jsonl`。
 
 ### English
 
@@ -381,7 +429,9 @@ If inception mode is selected, initialization will create:
 - `START_Codex.md`
 - `.codex-agent/PROJECT.md`
 - `.codex-agent/TASTE.md`
+- `.codex-agent/taste/project.md`
 - `.codex-agent/ROADMAP.md`
+- `.codex-agent/events/project-events.jsonl`
 - `.codex-agent/inception/...`
 
 Then start Codex and paste the contents of `START_Codex.md` as the first message.
@@ -407,10 +457,12 @@ Codex should read:
 - `AGENTS.md`
 - `.codex-agent/PROJECT.md`
 - `.codex-agent/TASTE.md`
+- `.codex-agent/taste/project.md` if `TASTE.md` marks it active
 - `.codex-agent/ROADMAP.md`
 
 If there is an active inception packet, continue clarification and spec shaping first.  
-If there is already an active task, resume directly from task state and continue under `ROADMAP.md`.
+If there is already an active task, resume directly from task state and continue under `ROADMAP.md`.  
+Only consult `.codex-agent/events/project-events.jsonl` or task `EVENTS.jsonl` when recent history is unclear.
 
 ## 11. 当前状态 / Current Status
 
@@ -422,6 +474,8 @@ If there is already an active task, resume directly from task state and continue
 - 外置大脑启动层
 - inception / delivery / evaluation 三阶段 skill
 - roadmap 驱动的连续推进协议
+- 轻量 append-only 事件层
+- 分层 TASTE 加载模型
 - 本地首条提示词生成
 
 后续仍可继续优化：
@@ -438,6 +492,8 @@ CodexFlow currently provides:
 - external-brain bootstrap layer
 - inception / delivery / evaluation skills
 - roadmap-driven continuity
+- lightweight append-only event logs
+- layered taste loading
 - generated first-message file for new Codex conversations
 
 Future improvements may include:

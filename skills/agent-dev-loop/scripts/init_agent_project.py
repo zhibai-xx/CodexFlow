@@ -21,6 +21,13 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def render_template(path: Path, replacements: dict[str, str]) -> str:
+    content = path.read_text(encoding="utf-8")
+    for placeholder, value in replacements.items():
+        content = content.replace(placeholder, value)
+    return content
+
+
 def main() -> int:
     args = parse_args()
     script_dir = Path(__file__).resolve().parent
@@ -39,14 +46,12 @@ def main() -> int:
     }
 
     created = []
-    for template_path in sorted(template_dir.glob("*.md")):
-        output_path = agent_root / template_path.name
+    for template_path in sorted(path for path in template_dir.rglob("*") if path.is_file()):
+        output_path = agent_root / template_path.relative_to(template_dir)
         if output_path.exists():
             continue
-        content = template_path.read_text(encoding="utf-8")
-        for placeholder, value in replacements.items():
-            content = content.replace(placeholder, value)
-        output_path.write_text(content, encoding="utf-8")
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(render_template(template_path, replacements), encoding="utf-8")
         created.append(output_path)
 
     print(agent_root)
@@ -61,6 +66,12 @@ def main() -> int:
     roadmap_path = agent_root / "ROADMAP.md"
     if roadmap_path.exists():
         print(f"Roadmap: {roadmap_path}")
+    taste_layer_path = agent_root / "taste" / "project.md"
+    if taste_layer_path.exists():
+        print(f"Taste layer: {taste_layer_path}")
+    event_log_path = agent_root / "events" / "project-events.jsonl"
+    if event_log_path.exists():
+        print(f"Project events: {event_log_path}")
     return 0
 
 

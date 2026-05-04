@@ -8,7 +8,8 @@ This project uses the external CodexFlow brain at `__BRAIN_ROOT__`.
 2. Read `__BRAIN_ROOT__/AGENTS.md`
 3. Read local `.codex-agent/PROJECT.md`
 4. Read local `.codex-agent/TASTE.md`
-5. Read local `.codex-agent/ROADMAP.md`
+5. Read only the active taste layer files listed in local `.codex-agent/TASTE.md`
+6. Read local `.codex-agent/ROADMAP.md`
 
 ## Behavior
 
@@ -16,6 +17,7 @@ This project uses the external CodexFlow brain at `__BRAIN_ROOT__`.
 - Use the external brain skills under `__BRAIN_ROOT__/skills/`.
 - If there is an active inception packet, continue idea clarification before coding.
 - If there is an active task, continue from `.codex-agent/tasks/`.
+- Consult `.codex-agent/events/project-events.jsonl` or task `EVENTS.jsonl` only when recent history is unclear.
 - If `ROADMAP.md` approves the next task and the autonomy budget remains, continue automatically instead of reporting after every completed task.
 
 ## Local Mode

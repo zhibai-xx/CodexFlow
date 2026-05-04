@@ -10,10 +10,12 @@ First:
 - use the external CodexFlow brain at `__BRAIN_ROOT__`
 - read `.codex-agent/PROJECT.md`
 - read `.codex-agent/TASTE.md`
+- then read only the active taste layer files listed in `.codex-agent/TASTE.md`
 - read `.codex-agent/ROADMAP.md`
 
 If there is an active inception packet, continue idea clarification before coding.
 If there is an active task, resume from `.codex-agent/tasks/`.
+Consult `.codex-agent/events/project-events.jsonl` or task `EVENTS.jsonl` only if recent history is unclear.
 If `ROADMAP.md` approves the next task and the autonomy budget remains, continue automatically instead of reporting after every completed task.
 ```
 

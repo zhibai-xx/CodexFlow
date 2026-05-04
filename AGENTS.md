@@ -34,7 +34,9 @@ This creates:
 - a `START_Codex.md` file containing the exact first message for a new Codex chat
 - `.codex-agent/PROJECT.md`
 - `.codex-agent/TASTE.md`
+- `.codex-agent/taste/project.md`
 - `.codex-agent/ROADMAP.md`
+- `.codex-agent/events/project-events.jsonl`
 - an inception packet if `--idea` is supplied
 
 After that, start Codex in the project root and either:
@@ -46,8 +48,10 @@ After that, start Codex in the project root and either:
 
 - Create project memory under `.codex-agent/` before substantial work in a new repo or subproject.
 - Fill in `.codex-agent/ROADMAP.md` before substantial delivery so the agent knows the approved task sequence and autonomy budget.
+- Treat `.codex-agent/TASTE.md` as the taste-stack index, then read only the active taste layers it marks active.
 - Create or reuse a task directory under `.codex-agent/tasks/` for any substantial coding task.
-- Keep `TASK.md`, `STATE.md`, `DECISIONS.md`, `EVIDENCE.md`, `RUNS.md`, `BACKLOG.md`, and `RESULTS.md` updated as the handoff contract.
+- Keep `TASK.md`, `STATE.md`, `DECISIONS.md`, `EVIDENCE.md`, `EVENTS.jsonl`, `RUNS.md`, `BACKLOG.md`, and `RESULTS.md` updated as the handoff contract.
+- Use append-only event logs for material facts, not every shell command.
 - Put future product or experiment codebases under `workspaces/` unless they belong in this agent repo itself.
 - Treat `workspaces/` as local-only by default; it is reserved for projects like `NovelMatrix` that should not be pushed to this repository's remote.
 - Continue through multiple implementation batches by default; do not stop after a single micro-step.
